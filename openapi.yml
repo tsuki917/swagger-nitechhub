@@ -18,13 +18,13 @@ tags:
     description: "DMの操作"
 
 paths:
-  "/users/{user_id}":
+  "/users/{userId}":
     get:
       summary: "ユーザーの取得"
       tags: ["users"]
       deprecated: false
       parameters:
-        - name: "user_id"
+        - name: "userId"
           in: "path"
           required: true
           schema:
@@ -42,7 +42,7 @@ paths:
       tags: ["users"]
       deprecated: false
       parameters:
-        - name: "user_id"
+        - name: "userId"
           in: "path"
           required: true
           schema:
@@ -53,37 +53,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/user"
+              $ref: "#/components/schemas/updateUserRequest"
       responses:
         "200":
           description: "成功"
-  "/users/favpeople/{user_id}":
-    put:
-      summary: "お気に入りユーザーの追加"
-      tags: ["users"]
-      deprecated: false
-      parameters:
-        - name: "user_id"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
-          description: "ユーザーID"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: "string"
-      responses:
-        "200":
-          description: "成功"
+  "/users/random/{userId}":
     get:
-      summary: "お気に入りユーザーの取得"
+      summary: "ランダムなユーザーの取得"
       tags: ["users"]
       deprecated: false
       parameters:
-        - name: "user_id"
+        - name: "userId"
           in: "path"
           required: true
           schema:
@@ -95,16 +75,14 @@ paths:
           content:
             application/json:
               schema:
-                type: "array"
-                items:
-                  $ref: "#/components/schemas/user"
-  "/users/block/{user_id}":
+                $ref: "#/components/schemas/user"
+  "/users/fav/{userId}":
     put:
-      summary: "ユーザーのブロック"
+      summary: "お気に入りユーザーの追加"
       tags: ["users"]
       deprecated: false
       parameters:
-        - name: "user_id"
+        - name: "userId"
           in: "path"
           required: true
           schema:
@@ -119,28 +97,114 @@ paths:
       responses:
         "200":
           description: "成功"
-  "/dms/new_message/{dm_id}":
-    put:
-      summary: "DMに新しいメッセージを追加"
-      tags: ["dms"]
+    delete:
+      summary: "お気に入りユーザーの削除"
+      tags: ["users"]
       deprecated: false
       parameters:
-        - name: "dm_id"
+        - name: "userId"
           in: "path"
           required: true
           schema:
             type: "string"
-          description: "DM ID"
+          description: "ユーザーID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "string"
       responses:
         "200":
           description: "成功"
+  "/users/block/{userId}":
+    put:
+      summary: "ユーザーのブロック"
+      tags: ["users"]
+      deprecated: false
+      parameters:
+        - name: "userId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "ユーザーID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "string"
+      responses:
+        "200":
+          description: "成功"
+    delete:
+      summary: "ユーザーのブロック解除"
+      tags: ["users"]
+      deprecated: false
+      parameters:
+        - name: "userId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "ユーザーID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "string"
+      responses:
+        "200":
+          description: "成功"
+  "/users/relation/{userId}":
+    get:
+      summary: "ユーザーの関係性の取得"
+      tags: ["users"]
+      deprecated: false
+      parameters:
+        - name: "userId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "ユーザーID"
+      responses:
+        "200":
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/userRelationShip"
+  "/users/tag/{tagId}":
+    get:
+      summary: "タグに紐づくユーザーの取得"
+      tags: ["users"]
+      deprecated: false
+      parameters:
+        - name: "tagId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "タグID"
+      responses:
+        "200":
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/user"
   "/tags":
     get:
       summary: "すべてのタグの取得"
       tags: ["tags"]
       deprecated: false
       parameters:
-        - name: "tag_id"
+        - name: "tagId"
           in: "path"
           required: true
           schema:
@@ -153,13 +217,13 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Tag"
-  "/tags/{user_id}":
+  "/tags/{userId}":
     put:
       summary: "タグにユーザーを追加する"
       tags: ["tags"]
       deprecated: false
       parameters:
-        - name: "tag_id"
+        - name: "tagId"
           in: "path"
           required: true
           schema:
@@ -168,13 +232,64 @@ paths:
       responses:
         "200":
           description: "成功"
-  "/dms/data/{dm_id}":
+    delete:
+      summary: "タグからユーザーを削除する"
+      tags: ["tags"]
+      deprecated: false
+      parameters:
+        - name: "tagId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "タグID"
+      responses:
+        "200":
+          description: "成功"
+  "/tags/countUsers":
+    get:
+      summary: "タグに紐づくユーザー数の取得"
+      tags: ["tags"]
+      deprecated: false
+      parameters:
+        - name: "tagIds"
+          in: "query"
+          required: true
+          schema:
+            type: "array"
+            items:
+              type: "integer"
+          description: "タグIDの配列"
+      responses:
+        "200":
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                type: "integer"
+
+  "/dms/new_message/{dmId}":
+    put:
+      summary: "DMに新しいメッセージを追加"
+      tags: ["dms"]
+      deprecated: false
+      parameters:
+        - name: "dmId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "DM ID"
+      responses:
+        "200":
+          description: "成功"
+  "/dms/data/{dmId}":
     get:
       summary: "DMの取得"
       tags: ["dms"]
       deprecated: false
       parameters:
-        - name: "dm_id"
+        - name: "dmId"
           in: "path"
           required: true
           schema:
@@ -187,13 +302,13 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/dm"
-  "/dms/list/{user_id}":
+  "/dms/list/{userId}":
     get:
       summary: "DMのリスト取得"
       tags: ["dms"]
       deprecated: false
       parameters:
-        - name: "user_id"
+        - name: "userId"
           in: "path"
           required: true
           schema:
@@ -205,7 +320,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/dm_list"
+                $ref: "#/components/schemas/dmList"
 
 components:
   schemas:
@@ -252,7 +367,48 @@ components:
           type: "array"
           items:
             type: "string"
-        
+    updateUserRequest:
+      type: "object"
+      properties:
+        userId:
+          type: "string"
+        name:
+          type: "string"
+        gender:
+          type: "string"
+        age:
+          type: "integer"
+        grade:
+          type: "integer"
+        field:
+          type: "string"
+        introduction:
+          type: "string"
+        iconData:
+          type: "string" 
+        iconUrl:
+          type: "string"
+    userRelationShip:
+      type: "object"
+      properties:
+        userId:
+          type: "string"
+        favPeopleList:
+          type: "array"
+          items:
+            type: "string"
+        blockPeopleList:
+          type: "array"
+          items:
+            type: "string"
+        favedPeopleList:
+          type: "array"
+          items:
+            type: "string"
+        blockedPeopleList:
+          type: "array"
+          items:
+            type: "string"
     tag:
       type: "object"
       properties:
@@ -269,17 +425,17 @@ components:
     dm:
       type: "object"
       properties:
-        dm_id:
+        dmId:
           type: "string"
-        user1_id:
+        user1Id:
           type: "string"
-        user2_id:
+        user2Id:
           type: "string"
-        message_id_list:
+        messageIdList:
           type: "array"
           items:
             type: "string"
-    dm_list:
+    dmList:
       type: "object"
       properties:
         user:
@@ -291,11 +447,11 @@ components:
     message:
       type: "object"
       properties:
-        message_id:
+        messageId:
           type: "string"
-        from_user_id:
+        from_userId:
           type: "string"
-        to_user_id:
+        to_userId:
           type: "string"
         text:
           type: "string"
