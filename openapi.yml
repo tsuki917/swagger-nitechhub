@@ -212,7 +212,9 @@ components:
     user:
       type: "object"
       properties:
-        user_id:
+        id:
+          type: "integer"
+        userId:
           type: "string"
         name:
           type: "string"
@@ -225,58 +227,45 @@ components:
         field:
           type: "string"
         introduction:
-          type: "string" 
-        icon_url:
           type: "string"
-        fav_tag_list:
+        iconData:
+          type: "string" 
+        iconUrl:
+          type: "string"
+        tagList:
           type: "array"
           items:
             type: "integer"
-        my_tag_list:
+        favPeopleList:
           type: "array"
           items:
-            type: "integer"
-        fav_people_list:
+            type: "string"
+        blockPeopleList:
           type: "array"
           items:
-            type: "integer"
-        block_people_list:
+            type: "string"
+        favedPeopleList:
           type: "array"
           items:
-            type: "integer"
-        faved_people_list:
+            type: "string"
+        blockedPeopleList:
           type: "array"
           items:
-            type: "integer"
-        blocked_people_list:
-          type: "array"
-          items:
-            type: "integer"
-        dm_id_list:
-          type: "array"
-          items:
-            type: "integer"
+            type: "string"
         
-    Tag:
+    tag:
       type: "object"
       properties:
-        tag_id:
+        id:
           type: "string"
         name:
           type: "string"
         count:
           type: "integer"
-        user_id_list:
+        userIdList:
           type: "array"
           items:
             type: "string"
-    my_tag:
-      type: "object"
-      properties:
-        tag_id:
-          type: "string"
-        image_url:
-          type: "string"
     dm:
       type: "object"
       properties:
