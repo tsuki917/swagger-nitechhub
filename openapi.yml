@@ -187,8 +187,10 @@ paths:
           in: "path"
           required: true
           schema:
-            type: "string"
-          description: "タグID"
+            type: "array"
+            items:
+              type: "integer"
+          description: "タグIDの配列"
       responses:
         "200":
           description: "成功"
