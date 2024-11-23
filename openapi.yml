@@ -345,8 +345,6 @@ components:
           type: "string"
         introduction:
           type: "string"
-        iconData:
-          type: "string" 
         iconUrl:
           type: "string"
         tagList:
@@ -386,8 +384,6 @@ components:
           type: "string"
         introduction:
           type: "string"
-        iconData:
-          type: "string" 
         iconUrl:
           type: "string"
     userRelationShip:
