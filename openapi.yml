@@ -37,6 +37,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/user"
+  "/users":
     put:
       summary: "ユーザーの作成"
       tags: ["users"]
@@ -76,24 +77,34 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/user"
-  "/users/fav/{userId}":
-    put:
+  "/users/fav":
+    post:
       summary: "お気に入りユーザーの追加"
       tags: ["users"]
       deprecated: false
-      parameters:
-        - name: "userId"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
-          description: "ユーザーID"
+      # parameters:
+      #   - name: "userId"
+      #     in: "path"
+      #     required: true
+      #     schema:
+      #       type: "string"
+      #     description: "ユーザーID"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: "string"
+              type: "object"
+              properties:
+                userId:
+                  type: "string"
+                  format: "uuid"
+                favUserId:
+                  type: "string"
+                  format: "uuid"
+            example:
+              userId: "cnt14069"
+              favUserId: "cnt14070"
       responses:
         "200":
           description: "成功"
@@ -101,40 +112,47 @@ paths:
       summary: "お気に入りユーザーの削除"
       tags: ["users"]
       deprecated: false
-      parameters:
-        - name: "userId"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
-          description: "ユーザーID"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: "string"
+              type: "object"
+              properties:
+                userId:
+                  type: "string"
+                  format: "uuid"
+                favUserId:
+                  type: "string"
+                  format: "uuid"
+            example:
+              userId: "cnt14069"
+              favUserId: "cnt14070"
+
       responses:
         "200":
           description: "成功"
-  "/users/block/{userId}":
-    put:
+  "/users/block":
+    post:
       summary: "ユーザーのブロック"
       tags: ["users"]
       deprecated: false
-      parameters:
-        - name: "userId"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
-          description: "ユーザーID"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: "string"
+              type: "object"
+              properties:
+                userId:
+                  type: "string"
+                  format: "uuid"
+                favUserId:
+                  type: "string"
+                  format: "uuid"
+            example:
+              userId: "cnt14069"
+              favUserId: "cnt14070"
       responses:
         "200":
           description: "成功"
@@ -142,19 +160,22 @@ paths:
       summary: "ユーザーのブロック解除"
       tags: ["users"]
       deprecated: false
-      parameters:
-        - name: "userId"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
-          description: "ユーザーID"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: "string"
+              type: "object"
+              properties:
+                userId:
+                  type: "string"
+                  format: "uuid"
+                favUserId:
+                  type: "string"
+                  format: "uuid"
+            example:
+              userId: "cnt14069"
+              favUserId: "cnt14070"
       responses:
         "200":
           description: "成功"
