@@ -226,32 +226,33 @@ paths:
       summary: "すべてのタグの取得"
       tags: ["tags"]
       deprecated: false
-      parameters:
-        - name: "tagId"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
-          description: "タグID"
       responses:
         "200":
           description: "成功"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Tag"
-  "/tags/{userId}":
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/tag"
     put:
       summary: "タグにユーザーを追加する"
       tags: ["tags"]
       deprecated: false
-      parameters:
-        - name: "tagId"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
-          description: "タグID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                userId:
+                  type: "string"
+                tagId:
+                  type: "string"
+            example:
+              userId: "cnt14069"
+              tagId: "cnt14070"
       responses:
         "200":
           description: "成功"
@@ -259,13 +260,20 @@ paths:
       summary: "タグからユーザーを削除する"
       tags: ["tags"]
       deprecated: false
-      parameters:
-        - name: "tagId"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
-          description: "タグID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                userId:
+                  type: "string"
+                tagId:
+                  type: "string"
+            example:
+              userId: "cnt14069"
+              tagId: "cnt14070"
       responses:
         "200":
           description: "成功"
@@ -352,42 +360,56 @@ components:
       properties:
         id:
           type: "integer"
+          example: 1
         userId:
           type: "string"
+          example: "cnt14069"
         name:
           type: "string"
+          example: "鈴木涼真"
         gender:
           type: "string"
+          example: "男"
         age:
           type: "integer"
+          example: 20
         grade:
           type: "integer"
+          example: 3
         field:
           type: "string"
+          example: "情報工学科"
         introduction:
           type: "string"
+          example: "こんにちは！"
         iconUrl:
           type: "string"
+          example: "https://example.com/icon.png"
         tagList:
           type: "array"
           items:
-            type: "integer"
+            type:
+            $ref: "#/components/schemas/tag"
         favPeopleList:
           type: "array"
           items:
             type: "string"
+            example: "cnt14070"
         blockPeopleList:
           type: "array"
           items:
             type: "string"
+            example: "cnt14071"
         favedPeopleList:
           type: "array"
           items:
             type: "string"
+            example: "cnt14072"
         blockedPeopleList:
           type: "array"
           items:
             type: "string"
+            example: "cnt14073"
     updateUserRequest:
       type: "object"
       properties:
@@ -432,15 +454,14 @@ components:
       type: "object"
       properties:
         id:
-          type: "string"
+          type: "integer"
+          example: 1
         name:
           type: "string"
+          example: "プログラミング"
         count:
           type: "integer"
-        userIdList:
-          type: "array"
-          items:
-            type: "string"
+          example: 100
     dm:
       type: "object"
       properties:
