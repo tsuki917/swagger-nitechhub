@@ -374,8 +374,8 @@ components:
           type: "integer"
           example: 20
         grade:
-          type: "integer"
-          example: 3
+          type: "string"
+          example: "B3"
         field:
           type: "string"
           example: "情報工学科"
@@ -422,7 +422,7 @@ components:
         age:
           type: "integer"
         grade:
-          type: "integer"
+          type: "string"
         field:
           type: "string"
         introduction:
