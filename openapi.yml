@@ -221,6 +221,56 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/user"
+  "/users/image/icon/{userId}":
+    post:
+      summary: "ユーザーアイコンのアップロード"
+      tags: ["users"]
+      deprecated: false
+      parameters:
+        - name: "userId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "ユーザーID"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: "object"
+              properties:
+                file:
+                  type: "string"
+                  format: "binary"
+      responses:
+        "200":
+          description: "成功"
+  "/users/image/back/{userId}":
+    post:
+      summary: "ユーザー背景画像のアップロード"
+      tags: ["users"]
+      deprecated: false
+      parameters:
+        - name: "userId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "ユーザーID"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: "object"
+              properties:
+                file:
+                  type: "string"
+                  format: "binary"
+      responses:
+        "200":
+          description: "成功"
   "/tags":
     get:
       summary: "すべてのタグの取得"
@@ -375,7 +425,7 @@ components:
           example: 20
         grade:
           type: "string"
-          example: "B3"
+          example: "M2"
         field:
           type: "string"
           example: "情報工学科"
@@ -385,6 +435,9 @@ components:
         iconUrl:
           type: "string"
           example: "https://example.com/icon.png"
+        backUrl:
+          type: "string"
+          example: "https://example.com/back.png"
         tagList:
           type: "array"
           items:
