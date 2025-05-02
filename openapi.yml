@@ -54,7 +54,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/updateUserRequest"
+              $ref: "#/components/schemas/putUser"
       responses:
         "200":
           description: "成功"
@@ -129,6 +129,53 @@ paths:
               userId: "cnt14069"
               favUserId: "cnt14070"
 
+      responses:
+        "200":
+          description: "成功"
+  "/users/unfav":
+    post:
+      summary: "嫌いなユーザーの追加"
+      tags: ["users"]
+      deprecated: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                userId:
+                  type: "string"
+                  format: "uuid"
+                unfavUserId:
+                  type: "string"
+                  format: "uuid"
+            example:
+              userId: "cnt14069"
+              unfavUserId: "cnt14070"
+      responses:
+        "200":
+          description: "成功"
+    delete:
+      summary: "嫌いなユーザーの削除"
+      tags: ["users"]
+      deprecated: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                userId:
+                  type: "string"
+                  format: "uuid"
+                unfavUserId:
+                  type: "string"
+                  format: "uuid"
+            example:
+              userId: "cnt14069"
+              unfavUserId: "cnt14070"
       responses:
         "200":
           description: "成功"
@@ -221,9 +268,43 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/user"
-  "/users/image/icon/{userId}":
-    post:
-      summary: "ユーザーアイコンのアップロード"
+  # "/users/image/{userId}":
+  #   post:
+  #     summary: "ユーザー画像のアップロード"
+  #     tags: ["users"]
+  #     deprecated: false
+  #     parameters:
+  #     - name: "userId"
+  #       in: "path"
+  #       required: true
+  #       schema:
+  #       type: "string"
+  #       description: "ユーザーID"
+  #     requestBody:
+  #     required: true
+  #     content:
+  #       multipart/form-data:
+  #       schema:
+  #         type: "object"
+  #         properties:
+  #         profileImage:
+  #           type: "string"
+  #           format: "binary"
+  #           description: "プロフィール画像"
+  #         coverImage:
+  #           type: "string"
+  #           format: "binary"
+  #           description: "カバー画像"
+  #         iconImage:
+  #           type: "string"
+  #           format: "binary"
+  #           description: "アイコン画像"
+  #     responses:
+  #     "200":
+  #       description: "成功"
+  "/users/image/{userId}":
+    put:
+      summary: "ユーザー画像のアップロード"
       tags: ["users"]
       deprecated: false
       parameters:
@@ -236,38 +317,22 @@ paths:
       requestBody:
         required: true
         content:
-          multipart/form-data:
+          multipart/form-data:  
             schema:
               type: "object"
               properties:
-                file:
+                iconUrl:
                   type: "string"
                   format: "binary"
-      responses:
-        "200":
-          description: "成功"
-  "/users/image/back/{userId}":
-    post:
-      summary: "ユーザー背景画像のアップロード"
-      tags: ["users"]
-      deprecated: false
-      parameters:
-        - name: "userId"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
-          description: "ユーザーID"
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: "object"
-              properties:
-                file:
+                  description: "アイコン画像"
+                coverUrl:
                   type: "string"
                   format: "binary"
+                  description: "カバー画像"
+                profileUrl:
+                  type: "string"
+                  format: "binary"
+                  description: "プロフィール画像"
       responses:
         "200":
           description: "成功"
@@ -435,9 +500,12 @@ components:
         iconUrl:
           type: "string"
           example: "https://example.com/icon.png"
-        backUrl:
+        coverUrl:
           type: "string"
-          example: "https://example.com/back.png"
+          example: "https://example.com/cover.png"
+        profileUrl:
+          type: "string"
+          example: "https://example.com/profile.png"
         tagList:
           type: "array"
           items:
@@ -446,24 +514,34 @@ components:
         favPeopleList:
           type: "array"
           items:
-            type: "string"
-            example: "cnt14070"
+            type: 
+            $ref: "#/components/schemas/simpleUser"
+        unfavPeopleList:
+          type: "array"
+          items:
+            type: 
+            $ref: "#/components/schemas/simpleUser"
         blockPeopleList:
           type: "array"
           items:
-            type: "string"
-            example: "cnt14071"
+            type: 
+            $ref: "#/components/schemas/simpleUser"
         favedPeopleList:
           type: "array"
           items:
-            type: "string"
-            example: "cnt14072"
+            type:
+            $ref: "#/components/schemas/simpleUser"
+        unfavedPeopleList:
+          type: "array"
+          items:
+            type:
+            $ref: "#/components/schemas/simpleUser"
         blockedPeopleList:
           type: "array"
           items:
-            type: "string"
-            example: "cnt14073"
-    updateUserRequest:
+            type:
+            $ref: "#/components/schemas/simpleUser"
+    simpleUser:
       type: "object"
       properties:
         userId:
@@ -482,6 +560,28 @@ components:
           type: "string"
         iconUrl:
           type: "string"
+    putUser:
+      type: "object"
+      properties:
+        userId:
+          type: "string"
+        name:
+          type: "string"
+        gender:
+          type: "string"
+        age:
+          type: "integer"
+        grade:
+          type: "integer"
+        field:
+          type: "string"
+        introduction:
+          type: "string"
+        tagList:
+          type: "array"
+          items:
+            type: "string"
+            example: "プログラミング"
     userRelationShip:
       type: "object"
       properties:
@@ -490,19 +590,33 @@ components:
         favPeopleList:
           type: "array"
           items:
-            type: "string"
+            type: 
+            $ref: "#/components/schemas/simpleUser"
+        unfavPeopleList:
+          type: "array"
+          items:
+            type:
+            $ref: "#/components/schemas/simpleUser"
         blockPeopleList:
           type: "array"
           items:
-            type: "string"
+            type: 
+            $ref: "#/components/schemas/simpleUser"
         favedPeopleList:
           type: "array"
           items:
-            type: "string"
+            type: 
+            $ref: "#/components/schemas/simpleUser"
+        unfavedPeopleList:
+          type: "array"
+          items:
+            type: 
+            $ref: "#/components/schemas/simpleUser"
         blockedPeopleList:
           type: "array"
           items:
-            type: "string"
+            type: 
+            $ref: "#/components/schemas/simpleUser"
     tag:
       type: "object"
       properties:
