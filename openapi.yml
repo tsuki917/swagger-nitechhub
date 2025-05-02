@@ -82,13 +82,6 @@ paths:
       summary: "お気に入りユーザーの追加"
       tags: ["users"]
       deprecated: false
-      # parameters:
-      #   - name: "userId"
-      #     in: "path"
-      #     required: true
-      #     schema:
-      #       type: "string"
-      #     description: "ユーザーID"
       requestBody:
         required: true
         content:
@@ -268,40 +261,6 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/user"
-  # "/users/image/{userId}":
-  #   post:
-  #     summary: "ユーザー画像のアップロード"
-  #     tags: ["users"]
-  #     deprecated: false
-  #     parameters:
-  #     - name: "userId"
-  #       in: "path"
-  #       required: true
-  #       schema:
-  #       type: "string"
-  #       description: "ユーザーID"
-  #     requestBody:
-  #     required: true
-  #     content:
-  #       multipart/form-data:
-  #       schema:
-  #         type: "object"
-  #         properties:
-  #         profileImage:
-  #           type: "string"
-  #           format: "binary"
-  #           description: "プロフィール画像"
-  #         coverImage:
-  #           type: "string"
-  #           format: "binary"
-  #           description: "カバー画像"
-  #         iconImage:
-  #           type: "string"
-  #           format: "binary"
-  #           description: "アイコン画像"
-  #     responses:
-  #     "200":
-  #       description: "成功"
   "/users/image/{userId}":
     put:
       summary: "ユーザー画像のアップロード"
