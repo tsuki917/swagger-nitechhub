@@ -76,7 +76,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/user"
+                $ref: "#/components/schemas/simpleUser"
   "/users/fav":
     post:
       summary: "お気に入りユーザーの追加"
@@ -560,6 +560,18 @@ components:
           type: "string"
         iconUrl:
           type: "string"
+          example: "https://example.com/icon.png"
+        coverUrl:
+          type: "string"
+          example: "https://example.com/cover.png"
+        profileUrl:
+          type: "string"
+          example: "https://example.com/profile.png"
+        tagList:
+          type: "array"
+          items:
+            type: 
+            $ref: "#/components/schemas/tag"
     putUser:
       type: "object"
       properties:
