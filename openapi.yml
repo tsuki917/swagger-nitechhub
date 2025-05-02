@@ -194,12 +194,12 @@ paths:
                 userId:
                   type: "string"
                   format: "uuid"
-                favUserId:
+                blockUserId:
                   type: "string"
                   format: "uuid"
             example:
               userId: "cnt14069"
-              favUserId: "cnt14070"
+              blockUserId: "cnt14070"
       responses:
         "200":
           description: "成功"
@@ -217,12 +217,12 @@ paths:
                 userId:
                   type: "string"
                   format: "uuid"
-                favUserId:
+                blockUserId:
                   type: "string"
                   format: "uuid"
             example:
               userId: "cnt14069"
-              favUserId: "cnt14070"
+              blockUserId: "cnt14070"
       responses:
         "200":
           description: "成功"
@@ -553,7 +553,7 @@ components:
         age:
           type: "integer"
         grade:
-          type: "integer"
+          type: "string"
         field:
           type: "string"
         introduction:
