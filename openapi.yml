@@ -52,7 +52,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
               $ref: "#/components/schemas/putUser"
       responses:
@@ -91,10 +91,8 @@ paths:
               properties:
                 userId:
                   type: "string"
-                  format: "uuid"
                 favUserId:
                   type: "string"
-                  format: "uuid"
             example:
               userId: "cnt14069"
               favUserId: "cnt14070"
@@ -114,10 +112,8 @@ paths:
               properties:
                 userId:
                   type: "string"
-                  format: "uuid"
                 favUserId:
                   type: "string"
-                  format: "uuid"
             example:
               userId: "cnt14069"
               favUserId: "cnt14070"
@@ -186,10 +182,8 @@ paths:
               properties:
                 userId:
                   type: "string"
-                  format: "uuid"
                 blockUserId:
                   type: "string"
-                  format: "uuid"
             example:
               userId: "cnt14069"
               blockUserId: "cnt14070"
@@ -209,10 +203,8 @@ paths:
               properties:
                 userId:
                   type: "string"
-                  format: "uuid"
                 blockUserId:
                   type: "string"
-                  format: "uuid"
             example:
               userId: "cnt14069"
               blockUserId: "cnt14070"
@@ -543,7 +535,7 @@ components:
         age:
           type: "integer"
         grade:
-          type: "integer"
+          type: "string"
         field:
           type: "string"
         introduction:
@@ -553,6 +545,15 @@ components:
           items:
             type: "string"
             example: "プログラミング"
+        iconImage:
+            type: string
+            format: binary
+        profileImage:
+            type: string
+            format: binary
+        coverImage:
+            type: string
+            format: binary
     userRelationShip:
       type: "object"
       properties:
